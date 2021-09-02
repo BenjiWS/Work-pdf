@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Livewire\UsersTable;
+use App\Http\Livewire\ConfigTable;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +14,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/Usuarios', UsersTable::class)
+        ->name('users');
+    
+    Route::get('/Configuraciones', ConfigTable::class)
+        ->name('configs');
+    
+    Route::get('/modules/ventas/PDF/{id}', [ConfigTable::class, 'generatePDF'])
+        ->name('generate-pdf');
+});
+
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('configs');
 });
