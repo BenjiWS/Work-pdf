@@ -22,12 +22,11 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('/Configuraciones', ConfigTable::class)
         ->name('configs');
+    
+    Route::get('/modules/ventas/PDF/{id}', [ConfigTable::class, 'generatePDF'])
+        ->name('generate-pdf');
 });
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('configs');
 });
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');

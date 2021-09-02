@@ -167,12 +167,12 @@
                     <button
                         wire:click="store()"
                         type="button"
-                        class="focus:outline-none text-white text-sm py-2.5 px-5 border-b-4 border-gray-700 rounded-md bg-gray-500 hover:bg-gray-800">Crear usuario</button>
+                        class="focus:outline-none text-white text-sm py-2.5 px-5 border-b-4 border-gray-700 rounded-md bg-gray-500 hover:bg-gray-800">Crear Folio</button>
                 @else
                     <button
                         wire:click="update({{$folio_id}})"
                         type="button"
-                        class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg">Actualizar usuario</button>
+                        class="focus:outline-none text-white text-sm py-2.5 px-5 rounded-md bg-blue-500 hover:bg-blue-600 hover:shadow-lg">Actualizar Folio</button>
                 @endif
             </div>
         </x-slot>
@@ -299,6 +299,11 @@
                                                     title="Eliminar">
                                                     <i class="far fa-trash-alt"></i>
                                                 </a>
+                                                <a
+                                                    wire:click="mandarID({{$folio->id}})"
+                                                    class="text-indigo-600 hover:text-indigo-900 m-1" title="Detalle">
+                                                    <i class="fas fa-info-circle"></i>
+                                                </a>
                                             </td>
                                        
                                         </tr>
@@ -322,5 +327,13 @@
     </div>
 </div>
 @push('js')
+    <script>
+        window.addEventListener('trueFolio', event =>{
+            id = event.detail.id;
+            var url = `{{ route('generate-pdf', "##") }}`;
+            url =  _.replace(url, '##', id + '.pdf');
+            window.open(url, '_blank');
+        });
+    </script>
     @include("scripts.sweetalert")
 @endpush

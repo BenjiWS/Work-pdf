@@ -8,6 +8,8 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade as PDF;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ConfigTable extends Component
 {
@@ -18,13 +20,11 @@ class ConfigTable extends Component
     public $search = '';
     public $modalToogle = false;
     public $modalToogleRole = false;
-    public $fechaToma, $fechaReporte, $horaToma, $horaReporte, $folio, $nombre, $sexo, $fecha, $pasaporte;
+    public $fechaToma, $fechaReporte, $horaToma, $horaReporte, $folio, $nombre, $sexo = "Masculino", $fecha, $pasaporte;
 
     public $folio_id;
 
     protected $listeners=['destroy'];
-
-  
 
     public function render()
     {
@@ -32,6 +32,8 @@ class ConfigTable extends Component
             'livewire.config-table',
             [
                 'configs' => Config::where('folio','like', "%{$this->search}%")
+                    ->orWhere("nombre", 'like', "%{$this->search}%")
+                    ->orWhere("pasaporte", 'like', "%{$this->search}%")
                     ->orderBy('folio')
                     ->paginate(10)
             ]
@@ -49,7 +51,7 @@ class ConfigTable extends Component
             'nombre' => 'required|string',
             'sexo' => 'required|string',
             'fecha' => 'required',
-            'pasaporte' => 'required',
+            'pasaporte' => 'required|integer',
         ];
 
         if($this->action === 'edit')
@@ -75,7 +77,13 @@ class ConfigTable extends Component
         'nombre.string' => 'Ingrese un nombre válido',
         'sexo.required' => 'Seleccione el genero',
         'pasaporte.required' => 'Ingrese el id del pasaporte',
+        'pasaporte.integer' => 'Ingrese solo numeros',
     ];
+
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
 
     public function openModal()
     {
@@ -210,6 +218,29 @@ class ConfigTable extends Component
             ]);
         }
 
+    }
+
+    public function mandarID(Config $folio)
+    {
+        return $this->dispatchBrowserEvent('trueFolio', ['id' => $folio->folio]);
+    }
+
+    public function generatePDF($idFolio)
+    {
+        $id = substr($idFolio, 0, -4);
+
+        $folio = Config::where('folio', '=' ,$id)->first();
+        $codigoQR = QrCode::encoding('UTF-8')->size(130)->generate( route('generate-pdf', $folio->folio));
+
+        $pdf = PDF::loadView(
+            'livewire.pdf',
+            [
+                'folio' => $folio,
+                'valor' => $codigoQR
+            ]
+        )->setPaper("carta", "portrait");
+
+        return $pdf->stream($folio->folio .'.pdf');
     }
 
     public function resetForm()
