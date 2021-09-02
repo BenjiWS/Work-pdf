@@ -19,5 +19,11 @@
         "postcss": "^8.1.14",
         "postcss-import": "^14.0.1",
         "tailwindcss": "^2.2.2"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-free": "^5.15.4",
+        "jquery": "^3.6.0",
+        "sweetalert": "^2.1.2",
+        "sweetalert2": "^11.1.4"
     }
 }
