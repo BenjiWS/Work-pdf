@@ -39,6 +39,11 @@
                 font-style: italic;
             }
 
+            .fontItalic26 {
+                font-size: 10pt;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
             .fontItalic20{
                 font-size: 10pt;
                 font-family: Arial, Helvetica, sans-serif;
@@ -94,12 +99,12 @@
                    <p class="fontItalic" style="margin-top: -20px;">Sample ID </p>
 
                    <p class="bold text1" style="margin-top: -5px">Fecha de Toma:</p>
-                   <p class="fontItalic2" style="margin-top: -33px; margin-left: 165px;   font-weight: bold;"> {{$folio->fechaToma . ' ' . $folio->horaToma}}</p>
+                   <p class="fontItalic26" style="margin-top: -33px; margin-left: 165px;   font-weight: bold;"> {{$folio->fechaToma . ' ' . $folio->horaToma}}</p>
                    <p class="fontItalic" style="margin-top: -14px;">Sample Collection Date</p>
                    <p class="fontItalic3" style="margin-top: -28px; margin-left: 165px;">GMT-6: Mexico-Central Time</p>
 
                    <p class="bold text1" style="margin-top: -5px">Fecha de Reporte:</p>
-                   <p class="fontItalic2" style="margin-top: -33px; margin-left: 165px;   font-weight: bold;"> {{$folio->fechaReporte . ' ' . $folio->horaReporte}}</p>
+                   <p class="fontItalic26" style="margin-top: -33px; margin-left: 165px;   font-weight: bold;"> {{$folio->fechaReporte . ' ' . $folio->horaReporte}}</p>
                    <p class="fontItalic"style="margin-top: -15px;">Results Repot Date </p>
                    <p class="fontItalic3" style="margin-top: -28px; margin-left: 165px;">GMT-6: Mexico-Central Time</p>
                 </div>

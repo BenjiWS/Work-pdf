@@ -51,7 +51,7 @@ class ConfigTable extends Component
             'nombre' => 'required|string',
             'sexo' => 'required|string',
             'fecha' => 'required',
-            'pasaporte' => 'required|integer',
+            'pasaporte' => 'required|string',
         ];
 
         if($this->action === 'edit')
@@ -77,7 +77,7 @@ class ConfigTable extends Component
         'nombre.string' => 'Ingrese un nombre válido',
         'sexo.required' => 'Seleccione el genero',
         'pasaporte.required' => 'Ingrese el id del pasaporte',
-        'pasaporte.integer' => 'Ingrese solo numeros',
+        'pasaporte.string' => 'Ingrese un pasaporte válido',
     ];
 
     public function updated($propertyName)

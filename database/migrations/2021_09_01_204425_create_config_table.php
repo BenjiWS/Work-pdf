@@ -23,7 +23,7 @@ class CreateConfigTable extends Migration
             $table->string('nombre');
             $table->string('sexo');
             $table->date('fecha');
-            $table->integer('pasaporte');
+            $table->string('pasaporte');
             $table->timestamps();
         });
     }
